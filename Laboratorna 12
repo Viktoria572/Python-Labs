@@ -1,0 +1,39 @@
+import matplotlib.pyplot as plt
+import numpy as np
+
+x = [0.1, 0.15, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.47, 0.5]
+y = []
+
+def f(x):
+  return x**2*np.sin(x)
+
+for i in range(10):
+  y.append(f(x[i]))
+  
+xx = x[0]+x[1]
+xx2 = x[0]**2 + x[1]**2
+yy = y[0]+y[1]
+yx = x[0]*y[0] + x[1]*y[1]  
+
+for i in range(8):
+    xx += x[i+2]
+    xx2 += x[i+2]**2
+    yy += y[i+2]
+    yx += x[i+2]*y[i+2]
+
+xx = xx / 10
+xx2 = xx2 / 10
+yy = yy / 10
+yx = yx / 10
+
+a1 = (yx + xx*yy)/(xx2 - xx**2)
+a0 = yy - a1 * xx
+Y = []
+for i in range(len(x)):
+  Y.append(a0 + a1 * x[i])
+
+plt.plot(x, y, 'b', x, Y, 'y') 
+plt.title('Метод найменших квадратів')
+plt.legend(['Графік', 'Пряма'])
+plt.grid()
+plt.show()
