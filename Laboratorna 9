@@ -1,0 +1,33 @@
+import numpy as np
+from math import factorial
+
+arr_x=[1.415, 1.420, 1.425, 1.430, 1.435, 1.440] 
+arr_y=[0.8885, 0.8895, 0.8906, 0.8916, 0.8926, 0.8936] 
+h = arr_x[1] - arr_x[0] 
+x = 0.005
+q = (x - 0)/h
+k=0
+
+def n(arr_y,j): 
+    mas=[] 
+    for i in range(len(arr_y)): 
+        mas.append(arr_y[i] - arr_y[i-1]) 
+    mas.pop(0)   
+    if j == 1: 
+        return mas 
+    else: 
+        j-=1 
+        return n(mas, j) 
+s_1 = arr_y[0] + q*n(arr_y,1)[0] + q*(q +1) * n(arr_y,2)[0]/factorial(2) 
+s_2 = q * (q-1) * (q-2) * n(arr_y,3)[0]/factorial(3) 
+s_3 = q * (q-1) * (q-2) * (q-3) * n(arr_y,4)[0]/factorial(4)
+s_4 = q * (q-1) * (q-2) * (q-3) * (q-4) * n(arr_y,5)[0]/factorial(5)
+n_1 = s_1 + s_2 + s_3 + s_4
+print(n_1)
+ 
+ss_1 = arr_y[5] + q*n(arr_y,1)[4] + q*(q +1) * n(arr_y,2)[3]/factorial(2) 
+ss_2 = q * (q+1) * (q+2) * n(arr_y,3)[0]/factorial(3) 
+ss_3 = q * (q+1) * (q+2) * (q+3) * n(arr_y,4)[0]/factorial(4)
+ss_4 = q * (q+1) * (q+2) * (q+3) * (q+4) * n(arr_y,5)[0]/factorial(5)
+n_2 = s_1 + s_2 + s_3 + s_4
+print(n_2)
