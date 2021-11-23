@@ -3,9 +3,9 @@ from scipy import optimize
 x0 = -1.1
 y0 = -1
 def f1(y):
-  return math.sin(x+1) - 1.2
+  return math.sin(y+1) - 1.2
 def f2(x):
-  return 4 + math.cos(y)
+  return 4 + math.cos(x)
 def iter(x,y,e):
   xn = x
   yn = y
@@ -25,4 +25,3 @@ def f(x):
   return math.sin(x[1] + 1) - x[0] - 1.2, math.cos(x[0]) - 4 * x[1]
 s = optimize.root(f, [0,0], method  = 'hybr')
 print(s.x)
-  
