@@ -1,0 +1,64 @@
+import numpy as np
+from scipy import integrate
+
+def Function_1(x): 
+    return x / np.sqrt(x + 3)
+def Function_2(x):  
+    return (2*x + 0.5) * np.sin(x)
+def Function_3(x):
+    return (x / (np.sqrt((x**2) + 2.3)))
+
+def Rectangle_method(ai, bi, n, f):
+    step = (bi - ai) / n
+    xi = [ai]
+    for i in range(0, n):
+        xi.append(xi[i] + step)
+
+    yi = []
+    for j in xi:
+        yi.append(f(j))
+    Left_rectangle = step * (sum(yi) - yi[len(yi) - 1])
+    Right_rectangle = step * (sum(yi) - yi[0])
+
+    Middle_xi = []
+    for i in range(0, n):
+        Middle_xi.append(xi[i] + step / 2)
+    Middle_yi = []
+    for j in Middle_xi:
+        Middle_yi.append(f(j))
+
+    Middle_rectangle = step * sum(Middle_yi)
+
+    print("formula of Left rectangles", Left_rectangle)
+    print("formula of Right rectangles", Right_rectangle)
+    print("formula of Middle rectangles", Middle_rectangle)
+
+    v, err = integrate.quad(f, ai, bi)
+    print(" Checking Rectangles method", v)
+
+def Simpsons_method(ai, bi, n, f):
+    h = (2 - 1.2) / n
+    xi = [ai]
+    for i in range(0, n):
+        xi.append(xi[i] + h)
+    yi = []
+    for i in xi:
+        yi.append(f(i))
+
+    res = (h / 3) * (yi[0] + 4 * (yi[1] + yi[3] + yi[5] + yi[7]) + 2 * (yi[2] + yi[4] + yi[6]) + yi[8])
+
+    check_simpson, error = integrate.quad(f, ai, bi)
+    print('Checking Simpson\'s method', check_simpson)
+    return res
+
+def method_trapezoidal(ai, bi, n, f):
+    h = (bi - ai) / n
+    sum = 0.8 * (f(ai) + f(bi))
+    for i in range(1, n):
+        sum += f(ai + i * h)
+    check_trapezoidal, error = integrate.quad(f, ai, bi)
+    print('Checking Trapezoidal method', check_trapezoidal)
+    return sum * h
+print('Rectangle method', Rectangle_method(0.8, 1.6, 10, Function_1))
+print('Simpson\'s method', Simpsons_method(1.2, 2, 8, Function_2))
+print('Trapezoidal method', method_trapezoidal(0.32, 0.66, 20, Function_3))
