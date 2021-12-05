@@ -1,0 +1,37 @@
+import matplotlib.pyplot as plt 
+from scipy.interpolate import interp1d 
+import scipy.integrate as integrate 
+import numpy as np 
+import math 
+
+speed=[25,35,45,30,60,120,100,100,70,75,80,65] 
+time = np.linspace(0,11,12, endpoint = True) 
+print("Time is:", time) 
+ 
+f = interp1d(time, speed) 
+ff = interp1d(time, speed, kind = 'cubic') 
+fff = interp1d(time, speed, kind = 'quadratic') 
+res1, err = integrate.quad(ff, 0, 11) 
+res2, err = integrate.quad(fff, 0, 11) 
+print("Integral for cubic kind[0,11] = ", res1) 
+print("Integral for quadratic kind[0,11] = ", res2) 
+time_new = np.linspace(0, 11, 10000, endpoint = True) 
+
+print("First schedule")
+
+plt.subplot(2,1,1) 
+plt.plot(time, speed, 'o', time_new, f(time_new), '-', time_new, ff(time_new), '--') 
+plt.axis([0, 11, 0, 130])  
+plt.legend(['speed', 'linear', 'cubic'], loc='best') 
+plt.grid(True) 
+plt.title("Kind cubic") 
+
+print("Second schedule")
+ 
+plt.subplot(2, 1 ,2) 
+plt.plot(time, speed, 'o', time_new, f(time_new), 'b-', time_new, fff(time_new), 'r--') 
+plt.axis([0, 11, 0, 130])  
+plt.legend(['speed', 'linear', 'quadratic'], loc='best') 
+plt.grid(True) 
+plt.title("Kind quadratic") 
+plt.show()
