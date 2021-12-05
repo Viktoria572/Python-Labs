@@ -1,0 +1,29 @@
+import matplotlib.pyplot as plt 
+from scipy.integrate import odeint 
+import numpy as np 
+import math
+
+alpha = 0.5    
+beta = 0.3      
+t0 = np.linspace(0.25, 20, 10000)  
+humanity = 1000000 
+susceptible = 990000 
+infected = 7000      
+recovered = 3000       
+def disease_epidemic(y, t, alpha, beta): 
+    susceptible, infected, recovered = y 
+    dSdt = -alpha * susceptible 
+    dIdt = alpha * susceptible - beta * infected 
+    dRdt = beta * infected 
+    return ([dSdt, dIdt, dRdt]) 
+  
+sol = odeint(disease_epidemic, [susceptible, infected, recovered], t0, args = (alpha, beta)) 
+sol = np.array(sol) 
+y =  math.exp(-alpha*susceptible) 
+plt.plot(t0, sol[:, 0], label = 'Susceptible') 
+plt.plot(t0, sol[:, 1], label = 'Infected') 
+plt.plot(t0, sol[:, 2], label = 'Recovered') 
+plt.title("Kermack and Mckendrick model of the disease epidemic")
+plt.legend(loc = "upper right") 
+plt.grid(True) 
+plt.show()
