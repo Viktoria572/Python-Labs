@@ -16,9 +16,7 @@ for i in range(0,10):
   y += h/2 * (f2(x,y) + f2(x + h, f2(x,y)))
   arrX.append([x])
   arrY.append([y])
-  print('X array: ', (np.round(arrX, 4)), 'Y array: ', (np.round(arrY, 4)))
-  print('h = ', h)
-  plt.plot(arrX, arrY, 'g--')
-  plt.show()
-
-
+print('X array: ', (np.round(arrX, 4)), 'Y array: ', (np.round(arrY, 4)))
+print('h = ', h)
+plt.plot(arrX, arrY, 'g--')
+plt.show()
